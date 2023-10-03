@@ -1,8 +1,10 @@
 const app = require("./app");
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+dotenv.config();
 
-const port = process.env.port || 3000;
-const database = "mongodb://127.0.0.1:27017/cars";
+const port = process.env.PORT || 3000;
+const database = process.env.DATABASE_URI;
 
 mongoose
   .connect(database, {
