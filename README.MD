@@ -5,7 +5,7 @@ Before you start, make sure you have Node.js and npm (Node Package Manager) inst
 ### Clone the repository:
 
 ```shell
-git clone https://github.com/aprimanfikri/challenge-04.git
+git clone https://github.com/maulanaabdullana2/Challange-04-FSW-Binar-Academy.git
 cd Challange-04-FSW-Binar-Academy
 ```
 
