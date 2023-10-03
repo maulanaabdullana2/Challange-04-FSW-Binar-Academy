@@ -18,7 +18,7 @@ npm install
 ### Set up environment:
 
 ```shell
-MONGO_URI=your-mongodb-uri
+DATABASE_URI=your-mongodb-uri
 PORT=your-port
 ```
 
