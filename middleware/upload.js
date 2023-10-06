@@ -10,10 +10,17 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype === "image/png" || file.mimetype === "image/jpeg") {
+  if (
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpeg" ||
+    file.mimetype === "image/gif"
+  ) {
     cb(null, true);
   } else {
-    cb(new Error("Only image/png and image/jpeg files are allowed"), false);
+    cb(
+      new Error("Only image/png, image/jpeg, and image/gif files are allowed"),
+      false
+    );
   }
 };
 

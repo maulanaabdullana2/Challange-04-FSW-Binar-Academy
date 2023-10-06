@@ -97,6 +97,9 @@
                             </div>
 
                             <form action="/add" method="POST" enctype="multipart/form-data">
+                                <% if (typeof error !== 'undefined') { %>
+                                    <div class="alert alert-danger mt-3"><%= error %></div>
+                                <% } %>
                                 <div class="bg__white mt-2">
                                     <div class="row">
                                         <div class="col-lg-6">
