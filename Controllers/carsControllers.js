@@ -1,3 +1,4 @@
+const imagekit = require("../middleware/imageKit");
 const Cars = require("../models/carsModels");
 const admincarspage = async (req, res) => {
   try {
@@ -42,12 +43,18 @@ const createpage = async (req, res) => {
 const createCars = async (req, res) => {
   try {
     const { name, price, category } = req.body;
-    const image = req.file.filename;
+    const file = req.file;
+
+    const img = await imagekit.upload({
+      file: file.buffer,
+      fileName: file.originalname,
+    });
+
     const car = new Cars({
       name,
       price,
       category,
-      image,
+      image: img.url,
     });
     await car.save();
     req.flash("message", "Ditambah");
@@ -78,10 +85,18 @@ const editCars = async (req, res) => {
   try {
     const id = req.params.id;
     const { name, price, category } = req.body;
-
     const existingCar = await Cars.findById(id);
 
-    const newImage = req.file ? req.file.filename : existingCar.image;
+    let newImage = existingCar.image;
+
+    if (req.file) {
+      const uploadResponse = await imagekit.upload({
+        file: req.file.buffer,
+        fileName: req.file.originalname,
+      });
+
+      newImage = uploadResponse.url;
+    }
 
     await Cars.findByIdAndUpdate(
       id,
@@ -89,17 +104,16 @@ const editCars = async (req, res) => {
         name,
         price,
         category,
-        image: newImage, // Gunakan gambar baru jika diunggah, atau gambar lama jika tidak
+        image: newImage,
       },
       {
         new: true,
       }
     );
-
     req.flash("message", "Diupdate");
     res.redirect("/");
   } catch (error) {
-    res.status(404).json({
+    res.status(500).json({
       status: "Failed",
       message: error.message,
     });
